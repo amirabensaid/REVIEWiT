@@ -28,5 +28,32 @@ const getOneMovie = asyncHandler(async (req, res) => {
     throw new Error("Server error : " + error.message);
   }
 });
+const createMovie = asyncHandler(async (req, res) => {
+  try {
+    const { name, description, rating, image_url } = req.body;
+    
+    // Validate input
+    if (!name || !description || !rating || !image_url) {
+      return res.status(400).json({ message: "Please provide all fields" });
+    }
 
-export { getMovies, getOneMovie };
+    const newMovie = await Movie.create({
+      name,
+      description,
+      rating,
+      image_url
+    });
+
+    res.status(201).json(newMovie);
+  } catch (error) {
+    console.error('Error creating movie:', error.message);
+    if (error.code === 11000) { // Duplicate key error
+      return res.status(400).json({ message: "Movie with this name already exists" });
+    }
+    res.status(500).json({ message: "Server error while creating movie" });
+  }
+});
+
+
+export { getMovies, getOneMovie, createMovie };
+

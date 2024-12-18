@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/ProtectedRoute/PrivateRoute";
+import AddMovie from './components/AddMovieButton';
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route path="/add-movie" element={<AddMovie />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           {/* Private Routes */}
